@@ -4,11 +4,12 @@
         <!-- <Toast /> -->
         <FileUpload pt:root:class = "card" name="upload" @upload="console.log('upload')" custom-upload :multiple="true" :file-limit="10" :maxFileSize="1 * 1024 * 1024 * 1024" @select="onSelectedFiles">
             <template #header="{ chooseCallback, clearCallback }">
+                <span v-if="clearCallbackFunction = clearCallback"></span>
                 <div class="header">
                     <div class="header-buttons">
                         <Button @click="chooseCallback()" icon="pi pi-file-plus" rounded outlined severity="secondary"></Button>
                         <Button @click="uploadEvent()" icon="pi pi-cloud-upload" rounded outlined severity="success" :disabled="!filesList || filesList.length === 0"></Button>
-                        <Button @click="clearEvent(clearCallback)" icon="pi pi-times" rounded outlined severity="danger" :disabled="!filesList || filesList.length === 0"></Button>
+                        <Button @click="clearEvent()" icon="pi pi-times" rounded outlined severity="danger" :disabled="!filesList || filesList.length === 0"></Button>
                     </div>
                     
                     <ProgressBar :value="totalSizePercent" :showValue="false" class="progress-bar">
@@ -23,7 +24,6 @@
                         <h5>{{ $t('pendingMessage') }}</h5>
                         <div class="items">
                             <div v-for="(file, index) of filesList" :key="file.name + file.type + file.size" class="item">
-                                {{ console.log(file) }}
                                 <div class = "item-wrapper-image">
                                     <img v-if = "file.type.includes('image/')" role="presentation" :alt="file.name" :src="file.objectURL" class="item-image" />
                                     <div v-else>
@@ -34,14 +34,14 @@
                                 <div>{{ formatSize(file.size) }}</div>
                                 {{ file.uploaded }}
                                 <Badge :value="uploadStatuses[index] ? $t('completedMessage') : $t('pendingMessage')" :severity="uploadStatuses[index] ? 'success' : 'warn'" />
-                                <Button icon="pi pi-times" @click = "removeFileEvent(index)" outlined rounded severity="danger" />
+                                <Button icon="pi pi-times" @click = "removeFileEvent(new Set([index]))" outlined rounded severity="danger" />
                             </div>
                         </div>
                     </div>
                 </div>
             </template>
-            
-            <template #empty>
+
+            <template #empty v-if = "filesList.length == 0">
                 <div class="empty">
                     <i class="pi pi-cloud-upload cloud-upload" />
                     <p class="drag-n-drop-text">{{ $t('uploadMessage') }}</p>
@@ -65,6 +65,7 @@ const totalSize = ref(0);
 const totalSizePercent = ref(0);
 const filesList = ref([]);
 const uploadStatuses = ref([]);
+const clearCallbackFunction = ref(null);
 
 const onSelectedFiles = (event) => {
     filesList.value = event.files;
@@ -74,14 +75,27 @@ const onSelectedFiles = (event) => {
     });
 };
 
-const removeFileEvent = (index) => {
-    filesList.value.splice(index, 1);
+const removeUploadedFiles = () => {
+    const indicesToRemove = new Set([]);
+    
+    uploadStatuses.value.forEach((val, i) => {
+        if (val)
+        indicesToRemove.add(i);
+    });
+
+    removeFileEvent(indicesToRemove);
+}
+
+const removeFileEvent = (indicesToRemove) => {
+    filesList.value = filesList.value.filter((_, i) => !indicesToRemove.has(i))
     totalSizePercent.value = 0;
+    clearCallbackFunction.value();
 }
 
 const clearEvent = (callback) => {
     totalSizePercent.value = 0;
-    callback();
+    filesList.value = [];
+    clearCallbackFunction.value();
 }
 
 const uploadEvent = async () => {
@@ -90,8 +104,9 @@ const uploadEvent = async () => {
         await uploadFile(filesList.value[i], (progressPercentage) => totalSizePercent.value += progressPercentage / filesList.value.length);
         uploadStatuses.value[i] = true
         toast.add({ severity: "success", summary: t('successUploadTitle'), detail: t('successUpload', [filesList.value[i].name]), life: 3000 });
-        removeFileEvent(i);
     }
+
+    setTimeout(removeUploadedFiles, 3000)
 };
 
 const formatSize = (bytes) => {
