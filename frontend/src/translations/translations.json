@@ -20,11 +20,21 @@
         "uploadMessage": "Drag and drop files to here to upload",
         "pendingMessage": "Pending",
         "completedMessage": "Completed",
+        "successUploadTitle": "Success!",
+        "successUpload": "File {0} has been uploaded",
 
         "list": {
             "nameMessage": "Name",
             "uploadedMessage": "Uploaded",
-            "editedMessage": "Edited"
+            "editedMessage": "Edited",
+            "sizeMessage": "Size"
+        },
+
+        "submitModal": {
+            "warningMessage": "Do you really want to delete the file?",
+            "titleMessage": "Confirmation",
+            "saveMessage": "Yes",
+            "cancelMessage": "Cancel"
         }
     },
 
@@ -49,12 +59,23 @@
         "uploadMessage": "Перенесіть сюди файли",
         "pendingMessage": "Очікування",
         "completedMessage": "Закінчено",
+        "successUploadTitle": "Вдалося!",
+        "successUpload": "Файл {0} був успішно завантажений",
 
         "list": {
             "nameMessage": "Назва",
             "uploadedMessage": "Завантажено",
-            "editedMessage": "Редактувалося"
+            "editedMessage": "Редактувалося",
+            "sizeMessage": "Розмір"
+        },
+
+        "submitModal": {
+            "warningMessage": "Ви дійсно хочете видалити файл?",
+            "titleMessage": "Підтвердження",
+            "saveMessage": "Так",
+            "cancelMessage": "Скасувати"
         }
+
     },
     
     "pl": {
@@ -78,11 +99,22 @@
         "uploadMessage": "Przenieś pliki",
         "pendingMessage": "Oczekiwanie",
         "completedMessage": "Zakończono",
+        "successUploadTitle": "Udało się!",
+        "successUpload": "Plik {0} był pomyślnie wysłany",
 
         "list": {
             "nameMessage": "Nazwa",
             "uploadedMessage": "Przesłane",
-            "editedMessage": "Edytowane"
+            "editedMessage": "Edytowane",
+            "sizeMessage": "Rozmiar"
+        },
+
+        "submitModal": {
+            "warningMessage": "Czy na pewno chcesz usunąć plik?",
+            "titleMessage": "Potwierdzenie",
+            "saveMessage": "Tak",
+            "cancelMessage": "Anuluj"
         }
+
     }
 }

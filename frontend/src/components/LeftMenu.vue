@@ -51,13 +51,13 @@ const items = ref([
             {
                 label: 'leftMenu.filesListMessage',
                 icon: "pi pi-list",
-                path: "/list"
+                path: "/"
             },
 
-            {
-                label: 'leftMenu.fileSearchMessage',
-                icon: 'pi pi-search',
-            }
+            // {
+            //     label: 'leftMenu.fileSearchMessage',
+            //     icon: 'pi pi-search',
+            // }
         ]
     },
     {

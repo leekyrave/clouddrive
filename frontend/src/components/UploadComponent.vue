@@ -2,48 +2,39 @@
 <template>
     <div class="card">
         <!-- <Toast /> -->
-        <FileUpload pt:root:class = "card" name="demo[]" url="/api/upload" @upload="onTemplatedUpload($event)" :multiple="true" accept="image/*" :maxFileSize="1000000" @select="onSelectedFiles">
-            <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
+        <FileUpload pt:root:class = "card" name="upload" @upload="console.log('upload')" custom-upload :multiple="true" :file-limit="10" :maxFileSize="1 * 1024 * 1024 * 1024" @select="onSelectedFiles">
+            <template #header="{ chooseCallback, clearCallback }">
                 <div class="header">
                     <div class="header-buttons">
-                        <Button @click="chooseCallback()" icon="pi pi-images" rounded outlined severity="secondary"></Button>
-                        <Button @click="uploadEvent(uploadCallback)" icon="pi pi-cloud-upload" rounded outlined severity="success" :disabled="!files || files.length === 0"></Button>
-                        <Button @click="clearCallback()" icon="pi pi-times" rounded outlined severity="danger" :disabled="!files || files.length === 0"></Button>
+                        <Button @click="chooseCallback()" icon="pi pi-file-plus" rounded outlined severity="secondary"></Button>
+                        <Button @click="uploadEvent()" icon="pi pi-cloud-upload" rounded outlined severity="success" :disabled="!filesList || filesList.length === 0"></Button>
+                        <Button @click="clearEvent(clearCallback)" icon="pi pi-times" rounded outlined severity="danger" :disabled="!filesList || filesList.length === 0"></Button>
                     </div>
+                    
                     <ProgressBar :value="totalSizePercent" :showValue="false" class="progress-bar">
                         <span class="progress-bar-text">{{ totalSize }}B / 1Mb</span>
                     </ProgressBar>
                 </div>
             </template>
 
-            <template pt:content:class = "content" #content="{ files, uploadedFiles, removeUploadedFileCallback, removeFileCallback }">
+            <template pt:content:class = "content" #content>
                 <div class="content">
-                    <div v-if="files.length > 0">
+                    <div v-if="filesList.length > 0">
                         <h5>{{ $t('pendingMessage') }}</h5>
                         <div class="items">
-                            <div v-for="(file, index) of files" :key="file.name + file.type + file.size" class="item">
-                                <div>
-                                    <img role="presentation" :alt="file.name" :src="file.objectURL" width="100" height="50" />
+                            <div v-for="(file, index) of filesList" :key="file.name + file.type + file.size" class="item">
+                                {{ console.log(file) }}
+                                <div class = "item-wrapper-image">
+                                    <img v-if = "file.type.includes('image/')" role="presentation" :alt="file.name" :src="file.objectURL" class="item-image" />
+                                    <div v-else>
+                                        <i class = "pi pi-file file-ico"/>
+                                    </div>
                                 </div>
                                 <span class="inter-400 label-wrap">{{ file.name }}</span>
                                 <div>{{ formatSize(file.size) }}</div>
-                                <Badge :value="$t('pendingMessage')" severity="warn" />
-                                <Button icon="pi pi-times" @click="onRemoveTemplatingFile(file, removeFileCallback, index)" outlined rounded severity="danger" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div v-if="uploadedFiles.length > 0">
-                        <h5>{{ $t('completedMessage') }}</h5>
-                        <div class="flex flex-wrap gap-4">
-                            <div v-for="(file, index) of uploadedFiles" :key="file.name + file.type + file.size" class="item">
-                                <div>
-                                    <img role="presentation" :alt="file.name" :src="file.objectURL" width="100" height="50" />
-                                </div>
-                                <span class="inter-400 label-wrap">{{ file.name }}</span>
-                                <div>{{ formatSize(file.size) }}</div>
-                                <Badge :value="$t('completedMessage')" class="mt-4" severity="success" />
-                                <Button icon="pi pi-times" @click="removeUploadedFileCallback(index)" outlined rounded severity="danger" />
+                                {{ file.uploaded }}
+                                <Badge :value="uploadStatuses[index] ? $t('completedMessage') : $t('pendingMessage')" :severity="uploadStatuses[index] ? 'success' : 'warn'" />
+                                <Button icon="pi pi-times" @click = "removeFileEvent(index)" outlined rounded severity="danger" />
                             </div>
                         </div>
                     </div>
@@ -64,44 +55,48 @@
 import { ref } from 'vue';
 import { usePrimeVue } from 'primevue/config';
 import { useToast } from "primevue/usetoast";
-
+import { uploadFile } from '@/api/files';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+const toast = useToast();
 const $primevue = usePrimeVue();
 
 const totalSize = ref(0);
 const totalSizePercent = ref(0);
-const files = ref([]);
-
-const onRemoveTemplatingFile = (file, removeFileCallback, index) => {
-    removeFileCallback(index);
-    totalSize.value -= parseInt(formatSize(file.size));
-    totalSizePercent.value = totalSize.value / 10;
-};
-
-const onClearTemplatingUpload = (clear) => {
-    clear();
-    totalSize.value = 0;
-    totalSizePercent.value = 0;
-};
+const filesList = ref([]);
+const uploadStatuses = ref([]);
 
 const onSelectedFiles = (event) => {
-    files.value = event.files;
-    files.value.forEach((file) => {
+    filesList.value = event.files;
+    filesList.value.forEach((file, index) => {
+        uploadStatuses.value[index] = false;
         totalSize.value += parseInt(formatSize(file.size));
     });
 };
 
-const uploadEvent = (callback) => {
-    totalSizePercent.value = totalSize.value / 10;
-    callback();
-};
+const removeFileEvent = (index) => {
+    filesList.value.splice(index, 1);
+    totalSizePercent.value = 0;
+}
 
-const onTemplatedUpload = () => {
-    // toast.add({ severity: "info", summary: "Success", detail: "File Uploaded", life: 3000 });
+const clearEvent = (callback) => {
+    totalSizePercent.value = 0;
+    callback();
+}
+
+const uploadEvent = async () => {
+    totalSizePercent.value = 0;
+    for (let i = 0; i < filesList.value.length; i++) {
+        await uploadFile(filesList.value[i], (progressPercentage) => totalSizePercent.value += progressPercentage / filesList.value.length);
+        uploadStatuses.value[i] = true
+        toast.add({ severity: "success", summary: t('successUploadTitle'), detail: t('successUpload', [filesList.value[i].name]), life: 3000 });
+        removeFileEvent(i);
+    }
 };
 
 const formatSize = (bytes) => {
     const k = 1024;
-    const dm = 3;
+    const dm = 2;
     const sizes = $primevue.config.locale.fileSizeTypes;
 
     if (bytes === 0) {
@@ -166,7 +161,7 @@ const formatSize = (bytes) => {
 .items {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
+    gap: 10px;
     overflow-y: auto;
     max-height: 400px;
     justify-content: center;
@@ -177,9 +172,12 @@ const formatSize = (bytes) => {
     display: flex; /* flex */
     flex-direction: column; /* flex-col */
     border-radius: var(12px); 
-    border: 0.2px solid gray;
+    border: 0.2px solid rgba(0, 0, 0, 0.247);
+    border-radius: 12px;
     align-items: center; /* items-center */
-    gap: 1rem; 
+    justify-content: space-between;
+    gap: 1rem;
+    width: 160px;
 
 }
 
@@ -209,5 +207,23 @@ const formatSize = (bytes) => {
 .drag-n-drop-text {
     margin-top: 6px;
     margin-bottom: 0;
+}
+
+.file-ico {
+    font-size: 2rem;
+}
+
+.item-wrapper-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 3rem;
+}
+
+.item-image {
+    width: 100%;
+    height: 3rem;
+    object-fit: contain;
 }
 </style>

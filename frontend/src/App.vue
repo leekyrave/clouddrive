@@ -4,6 +4,7 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
+  <Toast/>
   <LanguageComponent class = "language-choose" />
   <RouterView />
 </template>

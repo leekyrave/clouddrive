@@ -14,7 +14,7 @@ const router = createRouter({
       component: HomeView,
       children: [
         {
-          path: 'list',
+          path: '/',
           component: ListView
         },
 
