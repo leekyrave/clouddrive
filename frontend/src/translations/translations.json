@@ -23,6 +23,16 @@
         "successUploadTitle": "Success!",
         "successUpload": "File {0} has been uploaded",
 
+        
+        "errorTitleMessage": "Error",
+        "successTitleMessage": "Success",
+        "loginSuccessMessage": "You have authorized successfully",
+        "registerSuccessMessage": "You have registered successfully",
+        "registerErrorMessage": "Registration error. Please try again.",
+        "loginErrorMessage": "Login error. Check your credentials and try again.",
+        
+          
+
         "list": {
             "nameMessage": "Name",
             "uploadedMessage": "Uploaded",
@@ -61,6 +71,13 @@
         "completedMessage": "Закінчено",
         "successUploadTitle": "Вдалося!",
         "successUpload": "Файл {0} був успішно завантажений",
+        
+        "errorTitleMessage": "Помилка",
+        "successTitleMessage": "Успіх",
+        "loginSuccessMessage": "Ви успішно авторизувались",
+        "registerSuccessMessage": "Ви успішно зареєструвались",
+        "registerErrorMessage": "Помилка реєстрації. Спробуйте ще раз.",
+        "loginErrorMessage": "Помилка входу. Перевірте ваші дані та спробуйте ще раз.",
 
         "list": {
             "nameMessage": "Назва",
@@ -101,6 +118,13 @@
         "completedMessage": "Zakończono",
         "successUploadTitle": "Udało się!",
         "successUpload": "Plik {0} był pomyślnie wysłany",
+
+        "errorTitleMessage": "Błąd",
+        "successTitleMessage": "Sukces",
+        "loginSuccessMessage": "Zostałeś pomyślnie zalogowany",
+        "registerSuccessMessage": "Zostałeś pomyślnie zarejestrowany",
+        "registerErrorMessage": "Błąd rejestracji. Spróbuj ponownie.",
+        "loginErrorMessage": "Błąd logowania. Sprawdź swoje dane i spróbuj ponownie.",
 
         "list": {
             "nameMessage": "Nazwa",

@@ -55,10 +55,14 @@
 import { ref } from 'vue';
 import { usePrimeVue } from 'primevue/config';
 import { useToast } from "primevue/usetoast";
-import { uploadFile } from '@/api/files';
+import { startUploadFile } from '@/api/files';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
+const router = useRouter();
+import useAuthStore from '../stores/auth';
 const { t } = useI18n();
 const toast = useToast();
+const authStore = useAuthStore();
 const $primevue = usePrimeVue();
 
 const totalSize = ref(0);
@@ -74,6 +78,14 @@ const onSelectedFiles = (event) => {
         totalSize.value += parseInt(formatSize(file.size));
     });
 };
+
+
+
+
+const logout = async () => {
+    authStore.logout();
+    router.push({name: 'signin'})
+}
 
 const removeUploadedFiles = () => {
     const indicesToRemove = new Set([]);
@@ -101,7 +113,11 @@ const clearEvent = (callback) => {
 const uploadEvent = async () => {
     totalSizePercent.value = 0;
     for (let i = 0; i < filesList.value.length; i++) {
-        await uploadFile(filesList.value[i], (progressPercentage) => totalSizePercent.value += progressPercentage / filesList.value.length);
+        try {
+            await startUploadFile(filesList.value[i], (progressPercentage) => totalSizePercent.value += progressPercentage / filesList.value.length);
+        } catch (e) {
+            // logout();
+        }
         uploadStatuses.value[i] = true
         toast.add({ severity: "success", summary: t('successUploadTitle'), detail: t('successUpload', [filesList.value[i].name]), life: 3000 });
     }

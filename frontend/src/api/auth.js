@@ -1,26 +1,24 @@
 import axios from "axios"
 
-const Signup = async (login, password) => {
+const signUp = async (login, password) => {
     try {
-        const response = await axios.post('https://localhost:8000/register', {
-            login, password
+        const response = await axios.post('http://localhost:3000/api/users/register', {
+            username: login, password
         });
 
-        const token = response.data.token;
-        return token;
+        return response;
     } catch(e) {
         console.log(e);
     }
 }
 
-const Signin = async (login, password) => {
+const signIn = async (login, password) => {
     try {
-        const response = await axios.post('https://localhost:8000/login', {
-            login, password
+        const response = await axios.post('http://localhost:3000/api/users/login', {
+            username: login, password
         });
 
-        const token = response.data.token;
-        return token;
+        return response;
     } catch(e) {
         console.log(e);
     }
@@ -28,6 +26,6 @@ const Signin = async (login, password) => {
 
 
 export {
-    Signup,
-    Signin
+    signUp,
+    signIn
 }

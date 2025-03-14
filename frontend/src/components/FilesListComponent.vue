@@ -44,6 +44,7 @@ const { t } = useI18n();
 import useFilesStore from '../stores/files';
 const filesStore = useFilesStore();
 import { formatDate, formatSize } from '@/utils';
+import { onBeforeMount } from 'vue';
 
 const deleteFile = () => {
     confirm.require({
@@ -70,6 +71,9 @@ const deleteFile = () => {
     })
 }
 
+onBeforeMount(() => {
+    filesStore.fetchFiles();
+})
 </script>
 
 <style lang="scss">

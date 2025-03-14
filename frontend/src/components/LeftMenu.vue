@@ -11,18 +11,18 @@
             </template>
 
             <template #item="{ item, props }">
-                <RouterLink :to = "item.path" class = "color-item no-decoration">
-                <a v-ripple class="flex items-center" v-bind="props.action">
-                    <span :class="item.icon" />
-                    <span>{{ $t(item.label) }}</span>
-                </a>
+                <RouterLink :to = "item.path ? item.path : $route.path" @click = "item.activate ? item.activate() : null" class = "color-item no-decoration">
+                    <a v-ripple class="flex items-center" v-bind="props.action">
+                        <span :class="item.icon" />
+                        <span>{{ $t(item.label) }}</span>
+                    </a>
                 </RouterLink>
             </template>
             
             <template #end>
                 <button v-ripple class = "profile">
                     <Avatar size="10px" image = "/images/avatar.png" shape = "circle"/>
-                    <p>{{ authStore.user.name }}</p>
+                    <p>{{ authStore?.user?.username }}</p>
                 </button>
             </template>
         </Menu>
@@ -33,6 +33,14 @@
 import { ref } from "vue";
 import useAuthStore from '../stores/auth';
 const authStore = useAuthStore();
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
+
+const logout = async () => {
+    authStore.logout();
+    router.push({name: 'signin'})
+}
 
 const items = ref([
     {
@@ -66,6 +74,7 @@ const items = ref([
             {
                 label: 'leftMenu.logoutMessage',
                 icon: 'pi pi-sign-out',
+                activate: logout
             }
         ]
     },
@@ -73,6 +82,7 @@ const items = ref([
         separator: true
     }
 ]);
+
 </script>
 
 

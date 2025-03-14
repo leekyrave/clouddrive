@@ -1,34 +1,76 @@
 import { chunkFile } from "@/utils";
-import axios from "axios"
+import axios from "axios";
 
-const uploadFile = async (file, progressCallback) => {
+const API_URL = "http://localhost:3000/files";
+
+const startUploadFile = async (file, progressCallback) => {
+    try {
+        const { data } = await axios.post(`${API_URL}/upload/start`,
+            { filename: file.name, size: file.size },
+            { headers: { Authorization: `Bearer ` + localStorage.jwt_token } }
+        );
+
+        const uploadId = data.uploadId;
+        await uploadChunks(file, uploadId, progressCallback);
+    } catch (error) {
+        console.error("Error starting upload:", error);
+        throw new Error('error uploading')
+    }
+
+    return true;
+};
+
+const uploadChunks = async (file, uploadId, progressCallback) => {
     const chunks = chunkFile(file);
-
     let previousProgress = 0;
+
     for (let i = 0; i < chunks.length; i++) {
         const formData = new FormData();
-
-        formData.append('chunk', chunks[i]);
-        formData.append('fileName', file.name);
-        formData.append('chunkIndex', i);
-        formData.append('totalChunks', chunks.length);
+        formData.append("chunk", chunks[i]);
+        formData.append("uploadId", uploadId);
+        formData.append("chunkIndex", i);
 
         try {
-            const response = await axios.post('/api', formData, {
-                headers: { 'Content-Type': 'multipart/form-data' }
+            await axios.post(`${API_URL}/upload/chunk`, formData, {
+                headers: { Authorization: `Bearer ` + localStorage.jwt_token }
             });
 
-
-        } catch (e) {
-            console.log(e);
+            const progress = Math.round(((i + 1) / chunks.length) * 100);
+            progressCallback(progress - previousProgress);
+            previousProgress = progress;
+        } catch (error) {
+            console.error(`Error uploading chunk ${i}:`, error);
+            return;
         }
-        const progress = Math.min(((i + 1) / chunks.length) * 100, 100)
-        progressCallback(progress - previousProgress);
-
-        previousProgress = progress;
     }
-}
 
-export {
-    uploadFile
-}
+    await completeUpload(uploadId, file.name);
+};
+
+const completeUpload = async (uploadId, filename) => {
+    try {
+        await axios.post(`${API_URL}/upload/complete`,
+            { uploadId, filename },
+            { headers: { Authorization: `Bearer ` + localStorage.jwt_token } }
+        );
+
+        alert("Upload completed successfully!");
+    } catch (error) {
+        console.error("Error completing upload:", error);
+    }
+};
+
+const getUserFiles = async () => {
+    try {
+        const { data } = await axios.get(`${API_URL}/all`, {
+            headers: { Authorization: `Bearer ` + localStorage.jwt_token }
+        });
+
+        return data.files; 
+    } catch (error) {
+        console.error("Error fetching files:", error);
+        return [];
+    }
+};
+
+export { startUploadFile, getUserFiles };
