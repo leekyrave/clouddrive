@@ -1,0 +1,111 @@
+@import 'primeicons/primeicons.css';
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    @extend .inter-400;
+    font-size: 16px;
+}
+
+body {
+    background: #92b6f0;
+}
+
+.inter-100 {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 100;
+    font-style: normal;
+}
+
+.inter-200 {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 200;
+    font-style: normal;
+}
+
+.inter-300 {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.inter-400 {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.inter-500 {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.inter-600 {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.inter-700 {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.inter-800 {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+}
+
+.inter-900 {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 900;
+    font-style: normal;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.no-select {
+    user-select: none;
+}
+
+.absolute-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.no-decoration {
+    text-decoration: none;
+}
+
+.modal-presset {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-shadow: 8px 13px 24px -12px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 8px 13px 24px -12px rgba(66, 68, 90, 1);
+    box-shadow: 8px 13px 24px -12px rgba(66, 68, 90, 1);
+    border-radius: 12px;
+    background-color: white;
+    align-items: center;
+}
+
+.align-center {
+    text-align: center;
+}

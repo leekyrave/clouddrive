@@ -1,0 +1,88 @@
+{
+    "en": {
+        "welcomeMessage": "Welcome to Your CloudDrive",
+        "usernameHint": "Username",
+        "passwordHint": "Password",
+        "registerMessage": "Sign up",
+        "alreadyHasAccountMessage": "Already have account? Sign In",
+        "noAccountMessage": "Don't have account? Sign up",
+        "loginMessage": "Sign In",
+        
+        "leftMenu": {
+            "filesCategoryMessage": "Your Files",
+            "fileAddMessage": "Upload",
+            "fileSearchMessage": "Search",
+            "logoutMessage": "Logout",
+            "filesListMessage": "Files list",
+            "profileCategoryMessage": "Profile"
+        },
+        
+        "uploadMessage": "Drag and drop files to here to upload",
+        "pendingMessage": "Pending",
+        "completedMessage": "Completed",
+
+        "list": {
+            "nameMessage": "Name",
+            "uploadedMessage": "Uploaded",
+            "editedMessage": "Edited"
+        }
+    },
+
+    "ua": {
+        "welcomeMessage": "Вітаємо тебе на твоєму КлаудДрайві",
+        "usernameHint": "Ім'я користувача",
+        "passwordHint": "Пароль",
+        "registerMessage": "Зареєструватися",
+        "alreadyHasAccountMessage": "Вже є акаунт? Увійти",
+        "noAccountMessage": "Не маєте акаунта? Зареєструватися",
+        "loginMessage": "Увійти",
+
+        "leftMenu": {
+            "filesCategoryMessage": "Ваші файли",
+            "fileAddMessage": "Завантажити",
+            "fileSearchMessage": "Пошук",
+            "logoutMessage": "Вийти",
+            "filesListMessage": "Список файлів",
+            "profileCategoryMessage": "Профіль"
+        },
+        
+        "uploadMessage": "Перенесіть сюди файли",
+        "pendingMessage": "Очікування",
+        "completedMessage": "Закінчено",
+
+        "list": {
+            "nameMessage": "Назва",
+            "uploadedMessage": "Завантажено",
+            "editedMessage": "Редактувалося"
+        }
+    },
+    
+    "pl": {
+        "welcomeMessage": "Witaj na twoim CloudDrive",
+        "usernameHint": "Nazwa użytkownika",
+        "passwordHint": "Hasło",
+        "registerMessage": "Zarejestruj się",
+        "alreadyHasAccountMessage": "Już masz konto? Zaloguj się",
+        "noAccountMessage": "Nie masz konta? Zarejestruj się",
+        "loginMessage": "Zaloguj się",
+
+        "leftMenu": {
+            "filesCategoryMessage": "Twoje pliki",
+            "fileAddMessage": "Prześlij",
+            "fileSearchMessage": "Szukaj",
+            "logoutMessage": "Wyloguj się",
+            "filesListMessage": "Lista plików",
+            "profileCategoryMessage": "Konto"
+        },
+        
+        "uploadMessage": "Przenieś pliki",
+        "pendingMessage": "Oczekiwanie",
+        "completedMessage": "Zakończono",
+
+        "list": {
+            "nameMessage": "Nazwa",
+            "uploadedMessage": "Przesłane",
+            "editedMessage": "Edytowane"
+        }
+    }
+}
