@@ -1,4 +1,4 @@
-# Drive disk
+# Drive
 
 This project uses the following technologies:
 
@@ -7,6 +7,7 @@ This project uses the following technologies:
   - **Sequelize**: ORM for managing database models and interactions with MariaDB.
   - **JWT Authentication**: JSON Web Token for secure authorization.
   - **File Upload**: Chunked file upload implemented for efficient large file handling.
+  - **Swagger**: API documentation for easy testing and understanding of endpoints.
 
 - **Frontend**:
   - **Vue.js**: Frontend framework for building user interfaces.
@@ -51,3 +52,19 @@ This project uses the following technologies:
    ```bash
    npm start
    ```
+
+5. **Swagger Documentation**:
+
+   After starting the server, you can access the Swagger API documentation at:
+
+   ```
+   http://localhost:3000/api-docs
+   ```
+
+---
+
+## Planned Features
+
+- **Redis Integration**: In the future, we planned to integrate Redis for caching to improve performance, but due to time constraints, it has not been implemented yet.
+  
+- **File Editing**: We also intended to add a feature for editing uploaded files, but unfortunately, time did not permit us to complete this feature.
