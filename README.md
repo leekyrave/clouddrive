@@ -1,73 +1,70 @@
-# Zadanie pre-eliminacyjne _Hackathon 2025_
+# Drive
 
-## Cel zadania
-Celem zadania jest stworzenie aplikacji webowej umożliwiającej użytkownikom:
-- rejestrację,
-- logowanie,
-- zarządzanie plikami (przesyłanie, przeglądanie, pobieranie, edytowanie, usuwanie).
+This project uses the following technologies:
 
-## Wymagania
-Każdy użytkownik powinien mieć możliwość:
-- przesyłania plików,
-- pobierania plików,
-- edytowania plików,
-- podglądu plików,
-- usuwania plików.
+- **Backend**: 
+  - **Express**: A fast and minimalist web framework for Node.js.
+  - **Sequelize**: ORM for managing database models and interactions with MariaDB.
+  - **JWT Authentication**: JSON Web Token for secure authorization.
+  - **File Upload**: Chunked file upload implemented for efficient large file handling.
+  - **Swagger**: API documentation for easy testing and understanding of endpoints.
 
-## Dodatkowe informacje
-- System powinien zapewniać odpowiednią organizację przechowywania plików oraz mechanizmy zwiększające bezpieczeństwo przesyłanych i przechowywanych danych.
-- Wszystkie operacje na danych muszą być zabezpieczone przed nieuprawnionym dostępem.
-- Dokumentacja API powinna być czytelna i zrozumiała dla użytkowników (zalecane narzędzia: OpenAPI, Swagger itp.).
-- Aplikacja powinna obsługiwać błędy i sytuacje wyjątkowe w sposób przejrzysty dla użytkownika.
-- Ocenie podlega:
-  - funkcjonalność aplikacji,
-  - jakość kodu,
-  - użyteczność interfejsu API.
-- Wybór technologii i bibliotek jest dowolny.
-- Mile widziane:
-  - stosowanie dobrych praktyk programistycznych,
-  - czysty kod,
-  - wykorzystanie wzorców projektowych.
-- Nie zapomnijcie o testach! 😉
+- **Frontend**:
+  - **Vue.js**: Frontend framework for building user interfaces.
+  - **Pinia**: State management for Vue 3, used for handling global state.
+  - **Axios**: Promise-based HTTP client for making requests to the backend.
 
-## Termin
-Zadanie należy zakończyć i przesłać do **piątku, 14.03.2025 (23:59)**.
+- **Database**:
+  - **MariaDB**: Relational database management system for storing application data.
 
-Powodzenia! 🚀
+---
 
+## Setup Instructions
 
-# Pre-Elimination Task _Hackathon 2025_
+1. **Install dependencies**:
 
-## Task Objective
-The goal of this task is to create a web application that allows users to:
-- register,
-- log in,
-- manage files (upload, view, download, edit, delete).
+   ```bash
+   npm install
+   ```
 
-## Requirements
-Each user should be able to:
-- upload files,
-- download files,
-- edit files,
-- preview files,
-- delete files.
+2. **Configure environment variables**:
 
-## Additional Information
-- The system should ensure proper file storage organization and include mechanisms to enhance the security of transmitted and stored data.
-- All data operations must be protected against unauthorized access.
-- API documentation should be clear and understandable for users (recommended tools: OpenAPI, Swagger, etc.).
-- The application should handle errors and exceptional situations in a user-friendly manner.
-- Evaluation criteria include:
-  - application functionality,
-  - code quality,
-  - API usability.
-- The choice of technology and libraries is open.
-- Best practices are encouraged, including:
-  - clean code,
-  - software design patterns.
-- Don't forget about tests! 😉
+   Copy the `.env.example` file to `.env` and adjust the values for your local setup.
 
-## Deadline
-The task must be completed and submitted by **Friday, 14.03.2025 (23:59)**.
+   ```bash
+   cp .env.example .env
+   ```
 
-Good luck! 🚀
+3. **Run database migrations**:
+
+   To apply the database migrations, run the following command:
+
+   ```bash
+   npx sequelize-cli db:migrate
+   ```
+
+   **Note**: You may encounter issues with the `createdAt` fields due to potential database configuration mismatches. Please ensure your MariaDB server's timezone is properly configured and that the Sequelize model definitions align with your database's column defaults.
+
+4. **Start the server**:
+
+   Run the development server:
+
+   ```bash
+   npm start
+   ```
+
+5. **Swagger Documentation**:
+
+   After starting the server, you can access the Swagger API documentation at:
+
+   ```
+   http://localhost:3000/api-docs
+   ```
+
+---
+
+## Planned Features
+
+- **Redis Integration**: In the future, we planned to integrate Redis for caching to improve performance, but due to time constraints, it has not been implemented yet.
+  
+- **File Editing**: We also intended to add a feature for editing uploaded files, but unfortunately, time did not permit us to complete this feature.
