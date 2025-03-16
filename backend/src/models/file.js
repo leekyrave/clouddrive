@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'File',
     tableName: 'files',
-    timestamps: false
+    underscored: false
   });
   return File;
 };
