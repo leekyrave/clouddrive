@@ -5,7 +5,7 @@ function verifyJWT(req, res, next) {
 
     if (!token) {
         return res.status(401).json({
-            message: 'Token not prosasdasdvided'
+            message: 'Token not provided'
         })
     }
     const tokenWithoutBearer = token.startsWith('Bearer') ? token.slice(7) : token;
