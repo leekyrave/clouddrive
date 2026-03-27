@@ -7,7 +7,7 @@ module.exports = {
      * Add altering commands here.
      *
      * Example:
-     * await queryI functional comment nterface.createTable('users', { id: Sequelize.INTEGER });
+     * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
   },
 
