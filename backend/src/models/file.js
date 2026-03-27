@@ -5,7 +5,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class File extends Model {
     /**
-     * Helper method for defining associations.
+     * Helper method for definin some comments g associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
