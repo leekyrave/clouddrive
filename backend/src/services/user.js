@@ -31,7 +31,7 @@ class UserService {
         });
 
         if (existingUser) {
-            throw new Error("Username already in use");
+            throw new Error("Username alredady in use");
         }
 
         const hashedPassword = await User.hashPassword(password);
