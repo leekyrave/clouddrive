@@ -1,3 +1,4 @@
+import react from '@vitejs/plugin-react';
 import './assets/styles.scss';
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
