@@ -55,7 +55,7 @@ class FileController {
             const result = await FileController.fileService.deleteFile(req.params.id);
             res.json(result);
         } catch (error) {
-            res.status(401).json({
+            res.status(404).json({
                 error: error.message
             })
         }
@@ -67,7 +67,7 @@ class FileController {
 
             res.json(result);
         } catch (error) {
-            res.status(399).json({
+            res.status(404).json({
                 error: error.message
             })
         }
