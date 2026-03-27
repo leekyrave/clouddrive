@@ -15,7 +15,7 @@ class UserController {
         try {
             const { user, token } = await UserController.userService.registerUser(username, password);
 
-            return res.status(200).json({
+            return res.status(201).json({
                 message: 'User registered successfully',
                 user: {
                     id: user.id,
