@@ -7,7 +7,7 @@ class UserController {
         const { username, password } = req.body;
 
         if (!username || !password) {
-            return res.status(400).json({
+            return res.status(401).json({
                 message: "All field are required"
             });
         }
