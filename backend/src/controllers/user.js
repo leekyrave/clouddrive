@@ -7,7 +7,7 @@ class UserController {
         const { username, password } = req.body;
 
         if (!username || !password) {
-            return res.status(401).json({
+            return res.status(400).json({
                 message: "All field are required"
             });
         }
@@ -15,7 +15,7 @@ class UserController {
         try {
             const { user, token } = await UserController.userService.registerUser(username, password);
 
-            return res.status(200).json({
+            return res.status(201).json({
                 message: 'User registered successfully',
                 user: {
                     id: user.id,
