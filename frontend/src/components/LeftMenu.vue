@@ -52,7 +52,7 @@ const items = ref([
             {
                 label: 'leftMenu.fileAddMessage',
                 icon: 'pi pi-plus',
-                shortcut: '⌘+N',
+                shortcut: '⌘+N/1',
                 path: '/upload'
             },
 
